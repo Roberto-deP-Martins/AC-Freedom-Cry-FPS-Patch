@@ -1,0 +1,24 @@
+{
+    "configurations": [
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:AC Freedom Cry 240FPS Patch}",
+            "name": "Debug AC Freedom Cry 240FPS Patch",
+            "target": "AC Freedom Cry 240FPS Patch",
+            "configuration": "debug",
+            "preLaunchTask": "swift: Build Debug AC Freedom Cry 240FPS Patch"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:AC Freedom Cry 240FPS Patch}",
+            "name": "Release AC Freedom Cry 240FPS Patch",
+            "target": "AC Freedom Cry 240FPS Patch",
+            "configuration": "release",
+            "preLaunchTask": "swift: Build Release AC Freedom Cry 240FPS Patch"
+        }
+    ]
+}
