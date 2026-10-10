@@ -7,7 +7,7 @@ let package = Package(
     name: "AC Freedom Cry 240FPS Patch",
     dependencies: [
         // Dependencies declare other packages that this package depends on.
-        .package(url: "https://github.com/Roberto-deP-Martins/TinyFileDialogs", from: "1.0.0"),
+        .package(url: "https://github.com/Roberto-deP-Martins/TinyFileDialogs", from: "1.0.1"),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.

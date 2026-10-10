@@ -1,13 +1,13 @@
 {
-  "originHash" : "8f420a57bff9b61f9e49ebc06131474d47adf7d4e03df027b7ed8c5bb25b9a59",
+  "originHash" : "b3b310a702ef944d2b76b6b1121f9991a1693de2d660657123d614538add7720",
   "pins" : [
     {
       "identity" : "tinyfiledialogs",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Roberto-deP-Martins/TinyFileDialogs",
       "state" : {
-        "revision" : "59379b9c2a76078e5b0ffad4b9f093e280169e90",
-        "version" : "1.0.0"
+        "revision" : "3a2dab629f845cfd162c8636d7b68b3a72ef1b82",
+        "version" : "1.0.1"
       }
     }
   ],
