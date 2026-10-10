@@ -19,6 +19,26 @@
             "target": "AC Freedom Cry 240FPS Patch",
             "configuration": "release",
             "preLaunchTask": "swift: Build Release AC Freedom Cry 240FPS Patch"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:AC Freedom Cry 240FPS Patch}",
+            "name": "Debug AC_Freedom_Cry_240FPS_Patch",
+            "target": "AC_Freedom_Cry_240FPS_Patch",
+            "configuration": "debug",
+            "preLaunchTask": "swift: Build Debug AC_Freedom_Cry_240FPS_Patch"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:AC Freedom Cry 240FPS Patch}",
+            "name": "Release AC_Freedom_Cry_240FPS_Patch",
+            "target": "AC_Freedom_Cry_240FPS_Patch",
+            "configuration": "release",
+            "preLaunchTask": "swift: Build Release AC_Freedom_Cry_240FPS_Patch"
         }
     ]
 }
