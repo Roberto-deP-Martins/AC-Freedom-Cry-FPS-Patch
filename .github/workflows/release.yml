@@ -6,45 +6,65 @@ on:
       - 'v*.*.*'
 
 jobs:
-    release:
-        strategy:
-            matrix:
-                platform: [ubuntu-latest, windows-latest, macos-latest]
-        runs-on: ${{ matrix.platform }}
-        steps:
-            - name: Checkout repository
-              uses: actions/checkout@v3
+  build:
+    strategy:
+      matrix:
+        include:
+          - platform: windows-latest
+            os-name: windows
+            ext: .exe
+          - platform: ubuntu-latest
+            os-name: linux
+            ext: ''
+          - platform: macos-latest
+            os-name: macos
+            ext: ''
 
-            - name: Build on Windows
-              if: matrix.platform == 'windows-latest'
-              run: |
-                  echo "Building on Windows"
-                  winget install --id Microsoft.VisualStudio.2022.Community --exact --force --override "--quiet --wait --add Microsoft.VisualStudio.Component.Windows11SDK.22621 --add Microsoft.VisualStudio.Component.VC.Tools.x86.x64 --add Microsoft.VisualStudio.Component.VC.Tools.ARM64"
-                  winget install --id Swift.Toolchain -e --source winget
-                  swift build -c release
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-            - name: Build on Unix (Ubuntu / macOS)
-              if: matrix.platform != 'windows-latest'
-              run: |
-                  echo "Building on ${{ matrix.platform }}"
-                  swift build -c release
-            - name: Prepare Binary
-              shell: bash
-              run: |
-                  BINARY_NAME="acfc-240-fps-patch"
-                  
-                  if [ "${{ matrix.platform }}" = "windows-latest" ]; then
-                      EXT=".exe"
-                  else
-                      EXT=""
-                  fi
-                  
-                  mkdir -p dist
-                  cp .build/release/$BINARY_NAME$EXT dist/$BINARY_NAME-${{ matrix.platform }}$EXT
+      - name: Setup Swift on Windows
+        if: matrix.platform == 'windows-latest'
+        run: |
+          winget install --id Microsoft.VisualStudio.2022.Community --exact --force --override "--quiet --wait --add Microsoft.VisualStudio.Component.Windows11SDK.22621 --add Microsoft.VisualStudio.Component.VC.Tools.x86.x64 --add Microsoft.VisualStudio.Component.VC.Tools.ARM64"
+          winget install --id Swift.Toolchain -e --source winget
 
-            - name: Upload Release Asset
-              uses: softprops/action-gh-release@v2
-              if: startsWith(github.ref, 'refs/tags/')
-              with:
-                files: dist/*
-                draft: true
+      - name: Build Release Binary
+        run: swift build -c release --product "AC_Freedom_Cry_240FPS_Patch"
+
+      - name: Prepare Binary
+        shell: bash
+        run: |
+          BINARY_NAME="AC_Freedom_Cry_240FPS_Patch" # Must match your Package.swift executable target name
+          mkdir -p dist
+          cp .build/release/$BINARY_NAME${{ matrix.ext }} dist/$BINARY_NAME-${{ matrix.os-name }}{{ matrix.ext }}
+
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: binary-${{ matrix.os-name }}
+          path: dist/*
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: all-artifacts
+
+      - name: Flatten and Prepare Release Folder
+        run: |
+          mkdir -p dist
+          # Find all files inside all-artifacts and copy them flatly into dist/
+          find all-artifacts -type f -exec cp {} dist/ \;
+          ls -la dist/
+
+      - name: Create Release and Upload All Assets
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*
+          draft: true
