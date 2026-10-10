@@ -37,9 +37,9 @@ jobs:
       - name: Prepare Binary
         shell: bash
         run: |
-          BINARY_NAME="AC_Freedom_Cry_240FPS_Patch" # Must match your Package.swift executable target name
+          BINARY_NAME="AC_Freedom_Cry_240FPS_Patch"
           mkdir -p dist
-          cp .build/release/$BINARY_NAME${{ matrix.ext }} dist/$BINARY_NAME-${{ matrix.os-name }}{{ matrix.ext }}
+          cp ".build/release/$BINARY_NAME${{ matrix.ext }}" "dist/$BINARY_NAME-${{ matrix.platform }}${{ matrix.ext }}"
 
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v4
