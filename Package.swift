@@ -5,6 +5,9 @@ import PackageDescription
 
 let package = Package(
     name: "AC Freedom Cry 240FPS Patch",
+    platforms: [
+        .macOS(.v10_15)
+    ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         .package(url: "https://github.com/Roberto-deP-Martins/TinyFileDialogs", from: "1.0.1"),
