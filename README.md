@@ -1,4 +1,4 @@
-# Assassin's Creed Freedom Cry 240FPS Patch
+# Assassin's Creed Freedom Cry 240FPS Patcher
 
 This script patches the selected Assassin's Creed Freedom Cry game executable (`ACFC.exe`) in order to bump the maximum frame rate from 60FPS to 240FPS.
 
