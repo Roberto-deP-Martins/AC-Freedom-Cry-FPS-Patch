@@ -1,10 +1,19 @@
 import Foundation
 import TinyFileDialogs
+import Prism
 
 @main
 struct AC_Freedom_Cry_240FPS_Patch {
     static func main() {
-        print("Press enter to select the game executable (ACFC.exe) to patch:", terminator: "")
+        print(
+            Prism {
+                "Press"
+                Bold {
+                    ForegroundColor(.yellow, "Enter")
+                }
+                "to select the game executable (ACFC.exe) to patch:"
+            }
+        )
         _ = readLine()
 
         guard let filePath = FilePicker.openFile(
@@ -16,8 +25,22 @@ struct AC_Freedom_Cry_240FPS_Patch {
         }
 
         if !filePath.hasSuffix("ACFC.exe") {
-            print("Selected file is not the game executable (ACFC.exe).")
-            print("Press enter to exit.", terminator: "")
+            let errorMsg = Prism {
+                Bold {
+                    ForegroundColor(.red, "Selected file is not the game executable (ACFC.exe).")
+                }
+            }
+            print(errorMsg)
+            print(
+                Prism {
+                    "Press"
+                    Bold {
+                        ForegroundColor(.yellow, "Enter")
+                    }
+                    "to exit."
+                },
+                terminator: ""
+            )
             _ = readLine()
             exit(1)
         } 
@@ -43,13 +66,34 @@ struct AC_Freedom_Cry_240FPS_Patch {
             exit(1)
         }
         
-        print("Finished patching \(filePath)!")
-        print("Press enter to exit.", terminator: "")
+        print(
+            Prism {
+                Bold {
+                    ForegroundColor(.green, "\nFinished patching \(filePath)!")
+                }
+
+            }
+        )
+        print(
+            Prism {
+                "Press"
+                Bold {
+                    ForegroundColor(.yellow, "Enter")
+                }
+                "to exit."
+            },
+            terminator: ""
+        )
         _ = readLine()
     }
 
     static func backupOriginalExecutable(originUrl: URL, destinationUrl: URL) throws {
-        print("Backing up the original executable...")
+        print(
+            Prism {
+                "Backing up the original executable as file" 
+                Underline("\(destinationUrl.path)...")
+            }
+        )
         let fileManager = FileManager.default
         if fileManager.fileExists(atPath: destinationUrl.path) {
             try fileManager.removeItem(at: destinationUrl)

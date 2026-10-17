@@ -1,6 +1,15 @@
 {
-  "originHash" : "b3b310a702ef944d2b76b6b1121f9991a1693de2d660657123d614538add7720",
+  "originHash" : "f4d634c60898d8eb766e99461bf978dd3d2f4c28b3c53244e03a77d844d452b6",
   "pins" : [
+    {
+      "identity" : "prism",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Roberto-deP-Martins/Prism",
+      "state" : {
+        "revision" : "30600bb2596240c164f015f9e9777fe289b1347f",
+        "version" : "0.13.0"
+      }
+    },
     {
       "identity" : "tinyfiledialogs",
       "kind" : "remoteSourceControl",
