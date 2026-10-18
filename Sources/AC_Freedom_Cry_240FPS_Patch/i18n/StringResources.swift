@@ -10,7 +10,7 @@ enum Localized {
         var langName = [WCHAR](repeating: 0, count: 85)
         let length = GetUserDefaultLocaleName(&langName, Int32(langName.count))
         if length > 0 {
-            let locale = String(decodingCString: langName, as: UTF16.self)
+            let locale = String(decoding: langName, as: UTF16.self)
             if locale.lowercased().hasPrefix("pt") {
                 return "pt-BR"
             }
