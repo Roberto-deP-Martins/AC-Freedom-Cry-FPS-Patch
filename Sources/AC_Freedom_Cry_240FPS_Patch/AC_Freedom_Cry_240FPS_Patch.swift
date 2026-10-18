@@ -5,19 +5,11 @@ import Prism
 @main
 struct AC_Freedom_Cry_240FPS_Patch {
     static func main() {
-        print(
-            Prism {
-                "Press"
-                Bold {
-                    ForegroundColor(.yellow, "Enter")
-                }
-                "to select the game executable (ACFC.exe) to patch:"
-            }
-        )
+        print(Localized["open_file_dialog_prompt"])
         _ = readLine()
 
         guard let filePath = FilePicker.openFile(
-            title: "Select Assassin’s Creed Freedom Cry Executable",
+            title: Localized["file_dialog_title"],
             filters: ["*.exe"],
             allowMultiple: false
         ) else {
@@ -25,22 +17,8 @@ struct AC_Freedom_Cry_240FPS_Patch {
         }
 
         if !filePath.hasSuffix("ACFC.exe") {
-            let errorMsg = Prism {
-                Bold {
-                    ForegroundColor(.red, "Selected file is not the game executable (ACFC.exe).")
-                }
-            }
-            print(errorMsg)
-            print(
-                Prism {
-                    "Press"
-                    Bold {
-                        ForegroundColor(.yellow, "Enter")
-                    }
-                    "to exit."
-                },
-                terminator: ""
-            )
+            print(Localized["wrong_executable"])
+            print(Localized["exit_prompt"])
             _ = readLine()
             exit(1)
         } 
@@ -57,43 +35,22 @@ struct AC_Freedom_Cry_240FPS_Patch {
                 try? gameFileHandle.close()
             }
 
-            print("Patching \(filePath)...")
+            print(Localized["patching"].replacingOccurrences(of: "%s", with: filePath))
             try patchFrameTimer(gameFileHandle: gameFileHandle)
             try patchDeltaTimeCalc(gameFileHandle: gameFileHandle)
         } catch {
-            print("Error patching the game: \(error)")
+            print(Localized["error_patching"].replacingOccurrences(of: "%s", with: filePath))
             _ = readLine()
             exit(1)
         }
         
-        print(
-            Prism {
-                Bold {
-                    ForegroundColor(.green, "\nFinished patching \(filePath)!")
-                }
-
-            }
-        )
-        print(
-            Prism {
-                "Press"
-                Bold {
-                    ForegroundColor(.yellow, "Enter")
-                }
-                "to exit."
-            },
-            terminator: ""
-        )
+        print(Localized["finished_patching"].replacingOccurrences(of: "%s", with: filePath))
+        print(Localized["exit_prompt"])
         _ = readLine()
     }
 
     static func backupOriginalExecutable(originUrl: URL, destinationUrl: URL) throws {
-        print(
-            Prism {
-                "Backing up the original executable as file" 
-                Underline("\(destinationUrl.path)...")
-            }
-        )
+        print(Localized["backing_up"].replacingOccurrences(of: "%s", with: destinationUrl.path))
         let fileManager = FileManager.default
         if fileManager.fileExists(atPath: destinationUrl.path) {
             try fileManager.removeItem(at: destinationUrl)
@@ -108,9 +65,9 @@ struct AC_Freedom_Cry_240FPS_Patch {
     ///   - gameFileHandle: The file handle of the game executable.
     static func overwriteBytes(addressOffset: UInt64, newBytes: [UInt8], gameFileHandle: FileHandle) throws
     {
-        print("Seeking address \(String(addressOffset, radix: 16))...")
+        print(Localized["seeking_address"].replacingOccurrences(of: "%s", with: String(addressOffset, radix: 16)))
         try gameFileHandle.seek(toOffset: addressOffset)
-        print("Overwriting bytes at offset \(String(addressOffset, radix: 16))...")
+        print(Localized["overwriting_bytes"].replacingOccurrences(of: "%s", with: String(addressOffset, radix: 16)))
         try gameFileHandle.write(contentsOf: Data(newBytes))
     }
 
