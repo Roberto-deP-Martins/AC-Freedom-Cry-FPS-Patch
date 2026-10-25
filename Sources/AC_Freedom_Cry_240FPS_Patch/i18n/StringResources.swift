@@ -28,11 +28,13 @@ enum Localized {
         }
     }()
 
+    private static let fallbackDictionary: [String: String] = EnglishDictionary.strings
+
     static func string(_ key: String) -> String {
         return activeDictionary[key] ?? key
     }
 
     static subscript(key: String) -> String {
-        return activeDictionary[key] ?? key
+        return activeDictionary[key] ?? fallbackDictionary[key] ?? key
     }
 }
